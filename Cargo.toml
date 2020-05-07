@@ -1,0 +1,11 @@
+[package]
+name = "raunch"
+version = "1.0.0"
+authors = ["Brendan Molloy <brendan@bbqsrc.net>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+description = "A safe wrapper around launchd launch_activate_socket"
+repository = "https://github.com/bbqsrc/raunch"
+
+[dependencies]
+libc = "0.2.69"
