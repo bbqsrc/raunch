@@ -6,6 +6,8 @@ edition = "2018"
 license = "MIT OR Apache-2.0"
 description = "A safe wrapper around launchd launch_activate_socket"
 repository = "https://github.com/bbqsrc/raunch"
+keywords = ["macos", "launchd", "socket", "activation"]
+categories = ["os::macos-apis"]
 
 [dependencies]
 libc = "0.2.69"
