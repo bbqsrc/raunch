@@ -4,7 +4,6 @@
 use std::ffi::CString;
 use std::os::unix::io::RawFd;
 
-#[no_mangle]
 extern "C" {
     fn launch_activate_socket(
         name: *const libc::c_char,
@@ -60,10 +59,7 @@ pub fn activate_socket(name: &str) -> Result<Vec<RawFd>, Error> {
         unknown => return Err(Error::Unknown(unknown)),
     };
 
-    let out = unsafe {
-        let slice = std::slice::from_raw_parts(fds, cnt);
-        slice.iter().copied().collect::<Vec<RawFd>>()
-    };
+    let out = unsafe { std::slice::from_raw_parts(fds, cnt).to_vec() };
 
     unsafe {
         libc::free(fds as *mut _);
