@@ -1,3 +1,4 @@
+#![doc = include_str!("../README.md")]
 #![cfg(target_os = "macos")]
 
 use std::ffi::CString;
@@ -28,10 +29,16 @@ impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Error::Null => f.write_str("Null found in name string."),
-            Error::NotInPlist => f.write_str("The socket name specified does not exist in the caller's launchd.plist."),
+            Error::NotInPlist => f.write_str(
+                "The socket name specified does not exist in the caller's launchd.plist.",
+            ),
             Error::NotManaged => f.write_str("The calling process is not managed by launchd."),
-            Error::AlreadyActivated => f.write_str("The specified socket has already been activated."),
-            Error::Unknown(x) => f.write_str(&format!("An unknown error occurred with code {}.", x))
+            Error::AlreadyActivated => {
+                f.write_str("The specified socket has already been activated.")
+            }
+            Error::Unknown(x) => {
+                f.write_str(&format!("An unknown error occurred with code {}.", x))
+            }
         }
     }
 }

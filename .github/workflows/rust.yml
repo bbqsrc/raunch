@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    tags:
+      - 'v*'
+    branches: [ master ]
+  workflow_dispatch:
+
+concurrency:
+  group: rust-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  formatting:
+    name: Check formatting
+    strategy:
+      matrix:
+        include:
+        - os: macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+  tests:
+    name: Unit tests
+    strategy:
+      matrix:
+        include:
+        - os: macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run unit tests
+        run: cargo test --all
+
+  lints:
+    name: Clippy lints
+    strategy:
+      matrix:
+        include:
+        - os: macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for lints
+        run: cargo clippy --workspace --no-deps --all-targets -- -D warnings
